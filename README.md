@@ -12,6 +12,102 @@
   <strong>Local-first</strong> · <strong>English UI</strong> · <strong>Approval gates</strong> · <strong>No bundled credentials</strong>
 </p>
 
+## Download and install
+
+> **Supported system:** Linux. The commands below are ready to copy and paste on Debian, Ubuntu, and Kali Linux.
+
+### 1. Install the desktop requirements
+
+~~~bash
+sudo apt update
+sudo apt install -y git python3 python3-gi gir1.2-gtk-3.0 gir1.2-webkit2-4.1 ffmpeg curl
+~~~
+
+Install these two runtimes if they are not already available:
+
+- **Ollama:** [ollama.com/download](https://ollama.com/download)
+- **Node.js 24 or newer:** [nodejs.org/download](https://nodejs.org/en/download)
+
+Confirm that everything is ready:
+
+~~~bash
+python3 --version
+node --version
+npm --version
+ollama --version
+~~~
+
+### 2. Download Local AI Agent
+
+~~~bash
+cd ~
+git clone https://github.com/fouadcyper/local-ai-agent.git
+cd ~/local-ai-agent
+chmod +x install.sh
+./install.sh
+~~~
+
+The installer downloads the MCP client packages, installs the application icon, and adds **Local AI Agent** to the Linux applications menu.
+
+### 3. Download the local models
+
+The main chat model is required:
+
+~~~bash
+ollama pull qwen2.5:3b
+~~~
+
+The vision model is optional, but required for image attachments:
+
+~~~bash
+ollama pull qwen2.5vl:3b
+~~~
+
+### 4. Start the app
+
+Open **Local AI Agent** from the applications menu, or run:
+
+~~~bash
+cd ~/local-ai-agent
+./launch.sh
+~~~
+
+That is all you need for local chat, tools, MCP, web search, and image understanding. Telegram, GitHub, Brave, and other account integrations are enabled later from **Settings & connections** using your own login or token.
+
+<details>
+<summary><strong>Browser-only mode</strong></summary>
+
+~~~bash
+cd ~/local-ai-agent
+python3 server.py
+~~~
+
+Then open [http://127.0.0.1:7777](http://127.0.0.1:7777).
+
+</details>
+
+<details>
+<summary><strong>Updating an existing installation</strong></summary>
+
+~~~bash
+cd ~/local-ai-agent
+git pull
+./install.sh
+~~~
+
+</details>
+
+<details>
+<summary><strong>Common installation problems</strong></summary>
+
+- **Ollama offline:** run <code>ollama serve</code>, then reopen the app.
+- **No model appears:** run <code>ollama list</code> and pull <code>qwen2.5:3b</code>.
+- **Desktop window does not open:** verify that <code>python3-gi</code>, GTK 3, and WebKitGTK 4.1 are installed.
+- **MCP is unavailable:** verify that <code>node --version</code> reports version 24 or newer, then run <code>npm install</code> inside the project.
+- **Voice notes are unavailable:** install whisper.cpp and select its binary and model under **Settings → Vision & Voice**.
+
+</details>
+
 ## What it does
 
 Local AI Agent runs the language model through Ollama on your computer and gives it a practical, reviewable tool layer.
@@ -41,50 +137,17 @@ The settings panel includes ready-to-add presets for:
 
 Any other standard MCP server can be added with a command and environment variables, or a Streamable HTTP URL and headers. Secrets are masked when settings are returned to the UI.
 
-## Requirements
+## Requirements reference
 
-- Linux
-- Python 3.11+
-- Node.js 24+ and npm
-- [Ollama](https://ollama.com/download)
-- GTK 3 and WebKitGTK 4.1 for the desktop window
-- ffmpeg plus whisper.cpp and a Whisper model for voice notes
-- Optional: gh, Docker, uvx, and third-party API keys for their corresponding integrations
-
-On Debian, Ubuntu, or Kali:
-
-~~~bash
-sudo apt install python3 python3-gi gir1.2-gtk-3.0 gir1.2-webkit2-4.1 ffmpeg
-~~~
-
-## Install
-
-~~~bash
-git clone https://github.com/fouadcyper/local-ai-agent.git
-cd local-ai-agent
-chmod +x install.sh
-./install.sh
-ollama pull qwen2.5:3b
-~~~
-
-For image understanding:
-
-~~~bash
-ollama pull qwen2.5vl:3b
-~~~
-
-Then open **Local AI Agent** from the applications menu, or run:
-
-~~~bash
-./launch.sh
-~~~
-
-The browser version is also available:
-
-~~~bash
-python3 server.py
-# http://127.0.0.1:7777
-~~~
+| Component | Required | Purpose |
+|---|---:|---|
+| Linux + Python 3.11+ | Yes | Local backend and desktop shell |
+| Ollama + qwen2.5:3b | Yes | Local chat and agent tools |
+| Node.js 24+ + npm | Yes for MCP | MCP client and stdio servers |
+| GTK 3 + WebKitGTK 4.1 | Yes for desktop | Native Linux window |
+| qwen2.5vl:3b | Optional | Image understanding |
+| ffmpeg + whisper.cpp model | Optional | Voice-note transcription |
+| gh, Docker, uvx, API keys | Optional | Their matching integrations |
 
 ## Configure integrations
 
