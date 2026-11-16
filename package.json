@@ -1,0 +1,16 @@
+{
+  "name": "local-ai-agent-mcp-runtime",
+  "version": "1.0.0",
+  "description": "Official MCP client runtime for Local AI Agent",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "check": "node --check mcp_bridge.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/client": "^2.3.1"
+  }
+}

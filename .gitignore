@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+node_modules/
+.env
+.env.*
+!.env.example
+claude-code-system-prompts/
+.DS_Store
+*.log
+*.pid
+.idea/
+.vscode/

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Local AI Agent
+Comment=Private local AI agent with MCP, vision, voice, web, and integrations
+Exec="__APP_DIR__/localagent.py"
+Icon=local-ai-agent
+Terminal=false
+Categories=Development;Utility;
+Keywords=AI;LLM;Ollama;MCP;agent;local;
